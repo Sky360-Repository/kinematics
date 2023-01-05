@@ -1,5 +1,4 @@
 # utility functions
-from scipy.spatial import distance
 import math
 import numpy as np
 
@@ -10,12 +9,13 @@ def center_of_mass(bbox):
     y = bbox[1] + width/2
     return (x,y)
 
-def distance_vector(tuplea,tupleb):
+def distance_vector(tuplea,tupleb,height,width):
     from scipy.spatial import distance
-    # calculate euclidean distances [px] of a bounding box between two images
+    # calculate euclidean distances of a bounding box between two images 
+    # normalized by height,width of the video
     dist = distance.euclidean(tupleb,tuplea)
-    x = tupleb[0] - tuplea[0]
-    y = tupleb[1] - tuplea[1]
+    x = (tupleb[0] - tuplea[0])/width
+    y = (tupleb[1] - tuplea[1])/height
     vector = (x,y)
     return vector,dist
 
@@ -35,3 +35,11 @@ def clean_nans(list_a):
         else:
             list_cleaned.append(list_a[i])
     return list_cleaned
+
+import cv2
+def video_size(videofile):
+    vidcap = cv2.VideoCapture(videofile)
+    success, image = vidcap.read()
+    if success:
+        height,width,channels=image.shape
+    return height,width
