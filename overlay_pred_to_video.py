@@ -5,13 +5,14 @@ from pytictoc import TicToc
 from matplotlib.font_manager import json_load
 from utility import *
 
-t = TicToc() #create instance of timer
+# create instance of timer
+t = TicToc() 
 
 # type of font to be used later on
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 # import trained classification model
-with open('E:\Dokumente\Repos\kinematics-main\kinematics-main\model_Catch22_bird_plant_plane_30.pkl', 'rb') as f:
+with open('E:\Dokumente\Repos\kinematics-main\kinematics-main\model_Catch22_bird_plant_plane_10.pkl', 'rb') as f:
     clf = pickle.load(f)
 
 # path
@@ -28,14 +29,14 @@ df = json_load(path+'\\annotations.json')
 track = 34
 
 # number of frames for doing predictions
-sequence_length = 30
+sequence_length = 10
 
 # Check if camera opened successfully
 if (cap.isOpened()== False):
     print("Error opening video stream or file")
 
 # get video resolution
-height,width = video_size(path+"\\annotated_video.mp4")
+height,width,fps = video_info(path+"\\annotated_video.mp4")
 
 bbox_center = []
 vector_list = []
@@ -63,8 +64,8 @@ while(cap.isOpened()):
         if len(bbox_center)>3:
             # calculate distance and direction vector
 
-            _,dist = distance_vector(bbox_center[-1],bbox_center[-2],height,width)
-            vector,_ = distance_vector(bbox_center[-1],bbox_center[-4],height,width)
+            _,dist = distance_vector(bbox_center[-1],bbox_center[-2],height,width,fps)
+            vector,_ = distance_vector(bbox_center[-1],bbox_center[-4],height,width,fps)
             vector_list.append(vector)
             dist_list.append(dist)
 

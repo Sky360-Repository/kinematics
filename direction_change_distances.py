@@ -1,5 +1,4 @@
-from scipy import stats
-import numpy as np
+
 from matplotlib.font_manager import json_load
 from utility import *
 
@@ -17,7 +16,11 @@ def direction_change_distances(video_files,Object,sequence_length):
         if video_files["Object"][k]==Object:
             track = video_files["Track"][k]
             df = json_load(video_files["File paths"][k]+"\\annotations.json")
-            height,width = video_size(video_files["File paths"][k]+"\\annotated_video.mp4")
+            height,width,fps = video_info(video_files["File paths"][k]+"\\annotated_video.mp4")
+            # in some cases cv2 can't get the correct fps and returns 0.0
+            # for now we'll assume fps=30 in this case, but need a better fix
+            if fps == 0.0:
+                fps = 30.0
             print("video resolution = "+str(height)+"x"+str(width))
         else:
             continue
@@ -61,12 +64,12 @@ def direction_change_distances(video_files,Object,sequence_length):
                         #print(i)
                         #print(len(bbox_center))
                         if k_list[-2] == k_list[-1]:
-                            _,dist = distance_vector(bbox_center[-1],bbox_center[-2],height,width)
+                            _,dist = distance_vector(bbox_center[-1],bbox_center[-2],height,width,fps)
                             dist_list.append(dist)
                         if k_list[-4] == k_list[-1]:
                             # bounding box is jittery, therefore angles can always be large from frame to frame
                             # more informative if angles are based on frames that are farther apart
-                            vector,_ = distance_vector(bbox_center[-1],bbox_center[-4],height,width)
+                            vector,_ = distance_vector(bbox_center[-1],bbox_center[-4],height,width,fps)
                             vector_list.append(vector)
                             
                         

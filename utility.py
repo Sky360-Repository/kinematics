@@ -9,13 +9,15 @@ def center_of_mass(bbox):
     y = bbox[1] + width/2
     return (x,y)
 
-def distance_vector(tuplea,tupleb,height,width):
+def distance_vector(tuplea,tupleb,height,width,fps):
     from scipy.spatial import distance
     # calculate euclidean distances of a bounding box between two images 
     # normalized by height,width of the video
     dist = distance.euclidean(tupleb,tuplea)
     x = (tupleb[0] - tuplea[0])/width
+    x = x*fps/30 # this ensures that varying fps do not lead to different distances 
     y = (tupleb[1] - tuplea[1])/height
+    y = y*fps/30
     vector = (x,y)
     return vector,dist
 
@@ -37,9 +39,11 @@ def clean_nans(list_a):
     return list_cleaned
 
 import cv2
-def video_size(videofile):
+def video_info(videofile):
+    # function to get metadata
     vidcap = cv2.VideoCapture(videofile)
+    fps = vidcap.get(cv2.CAP_PROP_FPS)
     success, image = vidcap.read()
     if success:
         height,width,channels=image.shape
-    return height,width
+    return height,width,fps
