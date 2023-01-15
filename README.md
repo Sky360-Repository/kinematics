@@ -2,7 +2,7 @@
 
 **overlay_pred_to_video.py** uses a time series classification model (model_Catch22_bird_plant_plane_30.pkl) to predict the object type (for now only planes, birds and plants) based on the object's movement and speed. The prediction is overlaid on the video. The input are annotated videos and the annotations.json file from simpletracker.
 
-**overlay_pred_to_video_frames.py**: uses Catch22 time series classification models ( to predict the object type (for now only planes, birds and plants) based on the object's movement and speed. The prediction is overlaid on the video. The input are annotated videos and the annotations.json file from simpletracker.
+**overlay_pred_to_video_frames.py**: uses Catch22 time series classification models to predict the object type (for now only planes, birds and plants) based on the object's movement and speed for sequences of 5, 10, 15, 20, 25 and 30 frames. The prediction is overlaid on the video. The input are annotated videos and the annotations.json file from simpletracker.
 
 **model_Catch22_bird_plant_plane_x.pkl** contains a trained random forest classifier based on the Catch22 algorithm. The models were trained on sequences of x=5,10,15,20,25,30 frames to make predictions. It can be used in overlay_pred_to_video.py, only the file path has to be adjusted.
 
