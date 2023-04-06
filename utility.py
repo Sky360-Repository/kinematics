@@ -5,8 +5,8 @@ import numpy as np
 def center_of_mass(bbox):
     height=bbox[2]
     width=bbox[3]
-    x = bbox[0] + height/2
-    y = bbox[1] + width/2
+    x = bbox[0] + width/2
+    y = bbox[1] + height/2
     return (x,y)
 
 def distance_vector(tuplea,tupleb,height,width,fps):
