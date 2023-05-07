@@ -305,7 +305,7 @@ while(cap.isOpened()):
             d = {}
             m = 0
             for j in range(0,30):
-                if j %305 == 0:
+                if j % 30 == 0:
                   d[m] = pd.Series(direction_change_list_cleaned[j:j+30])
                   m += 1
             df1 = pd.Series(d).to_frame('Direction_changes')
