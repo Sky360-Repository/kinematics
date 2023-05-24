@@ -9,3 +9,7 @@
 The notebook **training_data_model_fit.ipynb** can be used to generate input data for model training, fitting and testing time series classification models.
 
 **Literature**: The article describing the Catch22 algorithm is found here (open access): https://link.springer.com/article/10.1007/s10618-019-00647-x
+
+
+# Testing visualization of codebase
+[Link to visualization](https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=Sky360-Repository%2Fkinematics)
